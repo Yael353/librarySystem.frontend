@@ -32,6 +32,29 @@ export const booksApi = {
   },
 
   /**
+   * GET /api/Books/top?count=5
+   * Hämtar topp N senaste böckerna (default 5)
+   */
+  getTop: async (count: number = 5): Promise<Book[]> => {
+    const { data } = await apiClient.get<Book[]>("/Books/top", {
+      params: { count },
+    });
+    return data;
+  },
+
+  /**
+   * GET /api/Books/genre/{genre}?count=10
+   * Hämtar böcker i en specifik genre (default 10)
+   */
+  getByGenre: async (genre: string, count: number = 10): Promise<Book[]> => {
+    const { data } = await apiClient.get<Book[]>(
+      `/Books/genre/${encodeURIComponent(genre)}`,
+      { params: { count } },
+    );
+    return data;
+  },
+
+  /**
    * POST /api/Books
    * Skapar en ny bok
    */
